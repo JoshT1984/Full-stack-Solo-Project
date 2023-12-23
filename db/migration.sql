@@ -14,6 +14,9 @@ CREATE TABLE users (
 CREATE TABLE themes (
     id SERIAL NOT NULL PRIMARY KEY,
     theme TEXT,
+    navbar_color TEXT,
+    input_color TEXT,
+    hr_color TEXT,
     background_color TEXT,
     text_color TEXT,
     border_color TEXT,

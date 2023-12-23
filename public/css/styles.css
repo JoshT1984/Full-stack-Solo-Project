@@ -1,3 +1,47 @@
-body {
-  background-color: aqua;
+nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  justify-items: center;
+  align-items: center;
+  box-sizing: border-box;
+  column-gap: 15rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
 }
+
+nav .theme_change {
+  width: 4rem;
+  height: 4rem;
+}
+
+nav .list_select {
+  width: 4rem;
+  height: 4rem;
+  padding: 20px;
+}
+
+nav .date_and_time {
+  height: 5rem;
+  font-size: 4rem;
+}
+
+main header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Cedarville Cursive", cursive;
+  margin-top: -5rem;
+  font-size: 4rem;
+}
+
+/* header .list {
+  margin-left: 4rem;
+}
+
+header .date_and_time {
+  margin-left: 4rem;
+}
+
+header .theme {
+  margin-left: 15rem;
+} */

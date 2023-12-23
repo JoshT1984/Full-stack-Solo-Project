@@ -1,6 +1,7 @@
 import express from "express";
 import pg from "pg";
 import "dotenv/config";
+import fs from "fs";
 
 const app = express();
 const { Pool } = pg;
@@ -19,15 +20,25 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/lists", async (req, res) => {
-  //SELECT <list_of_column_names> FROM <table1> , <table2> … <tableN> WHERE <conditions>;
+app.get("/lists/themes", async (req, res) => {
   try {
-    const { rows } = await pool.query(`SELECT * FROM themes`);
+    const { rows } = await pool.query("SELECT * from themes");
     res.status(200).send(rows);
   } catch (error) {
     res.status(404).send("No data found");
   }
 });
+
+app.get("/lists/users", async (req,res) =>{
+  try {
+    const { rows } = await pool.query("SELECT * from users");
+    res.status(200).send(rows);
+  } catch (error) {
+    res.status(404).send("No data found");
+  }
+});
+
+app.post("/lists", async (req, res) => {});
 
 app.listen(expressPort, () => {
   console.log(`listening on Port ${expressPort}`);
