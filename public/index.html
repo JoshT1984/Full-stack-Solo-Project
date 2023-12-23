@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- -------------------------------------------------------------------------HEAD/LINKS--------------------------------------------------------------- -->
+  <!-- -------------------------------------------------------------------------HEAD/LINKS--------------------------------------------------------------- -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,11 +11,15 @@
       href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
 
   <body>
-   <!-- --------------------------------------------------------------------- NAV BAR----------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------- NAV BAR----------------------------------------------------------------- -->
     <nav>
       <div>
         <img class="list_select" src="./images/icons/list_icon.png" alt="" />
@@ -35,24 +39,26 @@
     </nav>
     <!-- ------------------------------------------------------------------------------<HR>----------------------------------------------------------------------------- -->
     <hr />
-        
     <main>
-        <!-- ------------------------------------------------------------------ MAIN HEADER----------------------------------------------------------------------------->
+      <!-- ------------------------------------------------------------------ MAIN HEADER----------------------------------------------------------------------------->
       <header>
         <h1>To-Do List</h1>
       </header>
 
-        <!-- -------------------------------------------------MAIN SECTION 1 //// TO-DO FORM----------------------------------------------------------------------------->
+      <!-- -------------------------------------------------MAIN SECTION 1 //// TO-DO FORM----------------------------------------------------------------------------->
       <section id="form-container">
-
-        <form action="/lists" method="POST" class="todo">
-          <input type="text" name="firstname" placeholder="Enter First Name"/>
-          <input type="text" name = "lastname" placeholder="Enter Last Name"/>
-          <button>SUBMIT</button>
+        <form action="/lists/users" method="POST" class="todo">
+          <input type="text" name="firstname" placeholder="Enter First Name" />
+          <input type="text" name="lastname" placeholder="Enter Last Name" />
+          <button id="submit">submit</button>
         </form>
       </section>
+      <section>
+        <h1 class="firstname"></h1>
+        <h1 class="lastname"></h1>
+      </section>
     </main>
-<!-- --------------------------------------------------------------------------------SCRIPTS------------------------------------------------------------------------------ -->
+    <!-- --------------------------------------------------------------------------------SCRIPTS------------------------------------------------------------------------------ -->
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="

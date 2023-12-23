@@ -1,4 +1,5 @@
 nav {
+  font-family: 'Roboto', sans-serif;
   display: grid;
   grid-template-columns: auto 1fr auto;
   justify-items: center;
@@ -10,8 +11,8 @@ nav {
 }
 
 nav .theme_change {
-  width: 4rem;
-  height: 4rem;
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 nav .list_select {
@@ -21,8 +22,12 @@ nav .list_select {
 }
 
 nav .date_and_time {
-  height: 5rem;
-  font-size: 4rem;
+  font-size: 6rem;
+}
+
+main {
+  display: grid;
+  justify-content: center;
 }
 
 main header {
@@ -31,7 +36,14 @@ main header {
   align-items: center;
   font-family: "Cedarville Cursive", cursive;
   margin-top: -5rem;
-  font-size: 4rem;
+  font-size: 3.25rem;
+}
+
+#form-container {
+  height: 50rem;
+  width: 75vw;
+  display: grid;
+  justify-items: center;
 }
 
 /* header .list {

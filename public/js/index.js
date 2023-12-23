@@ -1,5 +1,6 @@
 getThemeData();
 getDate();
+getUserData();
 
 async function getThemeData() {
   try {
@@ -18,7 +19,6 @@ async function getThemeData() {
         "background-color": bgColorArray[random],
         color: textColorArray[random],
       });
-      getUserData();
     });
   } catch (err) {
     console.error(`Error: ${err}`);
@@ -44,4 +44,30 @@ async function getUserData() {
   } catch (err) {
     console.error(`Error: ${err}`);
   }
+}
+
+function buttonClick() {
+  $("#submit").on("click", function (e) {
+    e.preventDefault();
+
+    let $inputOne = $(".firstname").val();
+    let $inputTwo = $(".lastname").val();
+    let formData = fetch("/cards/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname: $inputOne,
+        lastname: $inputTwo,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 }
