@@ -40,18 +40,16 @@ app.get("/lists/users", async (req, res) => {
 
 app.post("/lists/users", async (req, res) => {
   const { firstname } = req.body;
-  const { lastname } = req.body;
   try {
     const { rows } = await pool.query(
-      `INSERT INTO users (firstname, lastname) VALUES ($1, $2)`,
-      [firstname, lastname]
+      `INSERT INTO users (firstname) VALUES ($1)`,
+      [firstname]
     );
-    console.log(rows);
     const newUserQuery = await pool.query(
       `SELECT * FROM users ORDER BY user_id DESC LIMIT 1`
     );
     const newUser = newUserQuery.rows[0];
-    res.status(201).send(newUser);
+    res.status(201).redirect("/");
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -75,7 +73,9 @@ app.delete("/lists/users/:id", async (req, res) => {
     let totalRowsNumber = totalRowsArray[0].count;
 
     if (parsedId >= 0 && parsedId <= totalRowsNumber) {
-      const { rows } = await pool.query(`DELETE from users WHERE user_id = ${id}`);
+      const { rows } = await pool.query(
+        `DELETE from users WHERE user_id = ${id}`
+      );
       res
         .status(200)
         .send(

@@ -1,4 +1,4 @@
-INSERT INTO users (firstname, lastname) VALUES ('Joshua', 'Thompson');
+INSERT INTO users (firstname) VALUES ('Joshua');
 
 INSERT INTO themes (id, theme, background_color, text_color, border_color, navbar_color, input_color, hr_color,  user_id) VALUES (DEFAULT,'xmas', '#378b29','#ff7878', '#ff0000','#ff0000', '#b1cbbb', '#ffffff', 1);
 INSERT INTO themes (id, theme, background_color, text_color, border_color, navbar_color, input_color, hr_color, user_id) VALUES (DEFAULT,'newyears','#14054c','#fff786', '#fffff0','#d7b030','#cfcfcf', '#03172f', 1);
@@ -16,7 +16,7 @@ INSERT INTO lists (id, list_type, format, user_id) VALUES (DEFAULT,'birthday', '
 
 INSERT INTO grocery_list (id, item, price, user_id) VALUES (DEFAULT,'eggs', '$2.50', 1);
 
-INSERT INTO todo_list (id, complete_by, task, user_id) VALUES (DEFAULT,'today', 'wash car', 1);
+INSERT INTO todo_list (id, task, complete_by, user_id) VALUES (DEFAULT,'today', 'wash car', 1);
 
 INSERT INTO xmas_list (id, gift_name, gift_price, user_id) VALUES (DEFAULT,'PS5', '$500', 1);
 

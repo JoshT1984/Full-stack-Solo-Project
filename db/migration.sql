@@ -7,8 +7,7 @@ DROP TABLE IF EXISTS xmas_list;
 
 CREATE TABLE users (
     user_id SERIAL NOT NULL PRIMARY KEY,
-    firstname TEXT,
-    lastname TEXT 
+    firstname TEXT
 );
 
 CREATE TABLE themes (

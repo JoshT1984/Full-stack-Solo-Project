@@ -15,6 +15,11 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
 
@@ -25,7 +30,7 @@
         <img class="list_select" src="./images/icons/list_icon.png" alt="" />
       </div>
       <div>
-        <h1 class="date_and_time">DATE AND TIME</h1>
+        <h1 class="todo">To-Do List</h1>
       </div>
       <div>
         <h1 class="theme">
@@ -41,21 +46,59 @@
     <hr />
     <main>
       <!-- ------------------------------------------------------------------ MAIN HEADER----------------------------------------------------------------------------->
-      <header>
-        <h1>To-Do List</h1>
-      </header>
+      <!-- <header>
+        <h1 class="date_and_time">DATE AND TIME</h1>
+      </header> -->
 
       <!-- -------------------------------------------------MAIN SECTION 1 //// TO-DO FORM----------------------------------------------------------------------------->
-      <section id="form-container">
-        <form action="/lists/users" method="POST" class="todo">
-          <input type="text" name="firstname" placeholder="Enter First Name" />
-          <input type="text" name="lastname" placeholder="Enter Last Name" />
-          <button id="submit">submit</button>
+      <section class="form-container">
+        <form action="/lists/users" method="POST" class="users">
+          <input 
+            class="input is-rounded firstname"
+            type="text"
+            name="firstname"
+            placeholder="First Name"
+            required/>
+          <button class = "submit">Submit</button>
         </form>
       </section>
       <section>
-        <h1 class="firstname"></h1>
-        <h1 class="lastname"></h1>
+        <h1 class="h1_firstname"></h1>
+      </section>
+      <section class = "add-todo"> 
+        <h2>Add new item</h2>
+        <img class ="img-todo" src="./images/icons/Add_Item_Icon.png" alt="">
+      </section>
+
+      <!-- <section class="todo-data">
+        <form action="/lists/todo" method="POST" class="todo-list-data">
+          <input 
+            class="input is-rounded firstname"
+            type="text"
+            name="firstname"
+            placeholder="First Name"
+            required/>
+          <button>Submit</button>
+        </form>
+      </section> -->
+      <section class = 'table-data'>
+        <table class="table is-bordered is-stripe" >
+          <thead>
+            <tr class="is-selected">
+              <th class = "header-1 has-text-centered">Task</th>
+              <th class = "header-2 has-text-centered">Complete-By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Take out the trash</td>
+              <td>By tomorrow</td>
+            </tr>
+              <td>Wash the car</td>
+              <td>Today</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </main>
     <!-- --------------------------------------------------------------------------------SCRIPTS------------------------------------------------------------------------------ -->
