@@ -7,7 +7,11 @@ nav {
   align-items: center;
   box-sizing: border-box;
   column-gap: 15rem;
-  margin: 2.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+  background-color: purple;
 }
 
 nav .list_select {
@@ -52,18 +56,22 @@ main {
   display: grid;
   justify-items: center;
   grid-template-columns: 1fr;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .form-container input {
   text-align: center;
   height: 3rem;
-  width: 15rem;
+  width: 20rem;
   margin-right: 3rem;
 }
 
-input[type="text"] {
-  font-size: 2rem;
+.form-container input:hover {
+  background-color: lightblue;
+}
+
+.form-container input[type="text"] {
+  font-size: 1.8rem;
 }
 
 button {
@@ -76,7 +84,7 @@ button {
   width: 4rem;
   height: 2.65rem;
   margin: 4px 2px;
-  opacity: 0.6;
+  opacity: 1;
   transition: 0.3s;
   margin-left: 1rem;
   margin-bottom: 0;
@@ -87,42 +95,48 @@ button {
 }
 
 button:hover {
-  opacity: 1;
+  opacity: 0.5;
 }
 
-@keyframes myAnim {
+@keyframes myAnimOne {
   0% {
-    transform: scale(0.5);
+    transform: scale(0.35);
   }
-
   100% {
     transform: scale(1);
   }
 }
 
 .h1_firstname {
-  margin: 5rem;
+  margin: 2rem;
   font-family: "Poppins", sans-serif;
   font-weight: 300;
-  animation: myAnim 2s ease 1s 1 normal forwards;
+  animation: myAnimOne 3s ease 1s 1 normal forwards;
   font-size: 3.5rem;
   text-align: center;
-  background-color: #d3d3d333;
   letter-spacing: 0.25rem;
 }
 
-@keyframes myAnim {
+@keyframes myAnimTwo {
   0% {
     transform: scale(0.5);
   }
-
   100% {
     transform: scale(1);
   }
 }
 
+.add-todo h2 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  text-decoration: underline;
+  opacity: 0.5;
+  margin-right: 4rem;
+  padding: 2.5rem;
+}
+
 .add-todo {
-  animation: myAnim 1.75s ease 0s 1 normal forwards;
+  animation: myAnimTwo 1.75s ease 0s 1 normal forwards;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,38 +144,123 @@ button:hover {
   display: none;
 }
 
-.add-todo h2 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  text-decoration: underline;
-  opacity: 0.5;
-  margin-right: 4rem;
-  padding: 2.5rem;
+.img-todo:hover {
+  transition-duration: 100ms;
+  margin-top: -0.2rem;
+  opacity: 0.7;
 }
-/* -----------------------------------------------table data---------------------------------------- */
+/* ----------------------------------------------Form (task and time to complete)------------------------------ */
 
-@keyframes myAnim {
+@keyframes myAnimThree {
   0% {
     transform: scale(0.5);
   }
-
   100% {
     transform: scale(1);
   }
 }
 
-.table-data {
-  animation: myAnim 1.5s ease 0s 1 normal forwards;
-  margin-top: 5rem;
-  display: grid;
-  width: 100%;
+.todo-form-wrapper {
+  display: flex;
+  animation: myAnimThree 1.75s ease 0s 1 normal forwards;
+  font-family: "Poppins", sans-serif;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   display: none;
 }
 
+.submit-todo {
+  background-color: #1ea9f4;
+  padding: 0;
+  margin: 0;
+  margin-left: 2rem;
+}
+
+.todo-data input[type="text"] {
+  margin: 2rem;
+  padding: 0;
+  font-size: 1.8rem;
+  height: 2.8rem;
+}
+
+.todo-data input[type="text"]:hover {
+  background-color: pink;
+}
+
+.task {
+  width: 40rem;
+}
+
+.complete_by {
+  width: 15rem;
+}
+
+/* -----------------------------------------------table data---------------------------------------- */
+
+@keyframes myAnimFour {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.table {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  bottom: 0;
+  left: 50%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-top: -4rem;
+  margin-left: -32rem;
+  margin-bottom: 5rem;
+  animation: myAnimFour 1.5s ease 0s 1 normal forwards;
+  text-align: center;
+  font-size: 1.6rem;
+  display: none;
+}
+
+th.sticky-header {
+  position: sticky;
+  top: 0;
+  background: #1ea9f4;
+  z-index: 10;
+}
+
 .header-1 {
-  width: 50rem;
+  width: 48rem;
 }
 .header-2 {
-  width: 10rem;
+  width: 16rem;
+}
+
+.trash {
+  position: absolute;
+  transition-duration: 100ms;
+  width: 2.5rem;
+  height: 2.5rem;
+  left: 0;
+  margin-left: 1rem;
+  margin-top: -0.25rem;
+}
+
+.trash:hover {
+  width: 3.1rem;
+  height: 3.1rem;
+  margin-top: -0.05rem;
+  opacity: 0.8;
+}
+
+.checkbox {
+  position: absolute;
+  transition-duration: 100ms;
+  width: 1.5rem;
+  height: 1.5rem;
+  right: 0;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
 }

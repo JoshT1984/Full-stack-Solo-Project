@@ -26,7 +26,6 @@ CREATE TABLE themes (
 CREATE TABLE lists (
     id SERIAL NOT NULL PRIMARY KEY,
     list_type TEXT,
-    format TEXT,
     user_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
@@ -41,9 +40,9 @@ CREATE TABLE "grocery_list"(
 
 CREATE TABLE todo_list (
     id SERIAL NOT NULL PRIMARY KEY,
-    complete_by TEXT,
     task TEXT,
-    user_id INTEGER NOT NULL,
+    complete_by TEXT,
+    user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 

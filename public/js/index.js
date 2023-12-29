@@ -1,29 +1,11 @@
-getThemeData();
+let userId;
+clickToViewThemes();
 getDate();
 buttonClick();
-// ---------------------------------------------------------GET THEME DATA-------------------------------------------------------
-async function getThemeData() {
-  try {
-    let bgColorArray = [];
-    let textColorArray = [];
+taskTable();
 
-    let listData = await $.get("/lists/themes");
-    listData.forEach((colors) => {
-      bgColorArray.push(colors.background_color);
-      textColorArray.push(colors.text_color);
-    });
-    let $body = $("body");
-    // $body.on("click", function () {
-    //   let random = Math.floor(Math.random() * 8);
-    //   $body.css({
-    //     "background-color": bgColorArray[random],
-    //     color: textColorArray[random],
-    //   });
-    // });
-  } catch (err) {
-    console.error(`Error: ${err}`);
-  }
-}
+// ----------------------------------------------------------------------Event Listener To View Themes------------------------------------------------------------
+
 // ----------------------------------------------------------------------GET DATE------------------------------------------------------------------------------
 function getDate() {
   const date = new Date();
@@ -39,6 +21,7 @@ async function getUserData() {
     } else {
       userData.forEach((user) => {
         $userH1.text(`Hello, ${user.firstname}`);
+        userId = user.user_id.toString();
       });
     }
   } catch (err) {
@@ -69,7 +52,7 @@ function buttonClick() {
           console.log("Success:", data);
           $addTodo.css("display", "flex");
           getUserData();
-          showTodoTable();
+          showTodoInput();
         })
         .catch((error) => {
           console.error(error);
@@ -80,13 +63,141 @@ function buttonClick() {
   });
 }
 
-function showTodoTable() {
+function showTodoInput() {
   let $addTodo = $(".add-todo");
   let $imgTodo = $(".img-todo");
-  let $tableData = $(".table-data");
-
+  let $todoInputs = $(".todo-form-wrapper");
+  // -----------------------------------------------------Add task button click-----------------------------------
   $imgTodo.on("click", function () {
-    $tableData.css("display", "grid");
+    $todoInputs.css("display", "flex");
     $addTodo.hide();
   });
 }
+
+function taskTable() {
+  let $addTodo = $(".add-todo");
+  let $tableData = $(".table");
+  let $tableBody = $(".tbody-todo");
+  let $inputOne;
+  let $inputTwo;
+
+  const $userH1 = $(".h1_firstname");
+
+  let $todoInputs = $(".todo-form-wrapper");
+  let $tableDataBtn = $(".submit-todo");
+  $tableDataBtn.on("click", function (e) {
+    $inputOne = $(".task").val();
+    $inputTwo = $(".complete_by").val();
+    let $imgSpan = $("<img/>")
+      .attr("src", "../images/icons/trash3.png")
+      .addClass("trash");
+    let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
+    e.preventDefault();
+
+    let todoData = fetch("/lists/todo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        task: $inputOne,
+        complete_by: $inputTwo,
+      }),
+    })
+      .then((data) => {
+        console.log("Success:", data);
+        $todoInputs.hide();
+
+        let $dataTask = $("<td/>").text($inputOne).prepend($imgSpan);
+        let $dataComplete_By = $("<td/>").text($inputTwo).append($checkbox);
+        let $tableRow = $("<tr/>").append($dataTask);
+
+        $tableRow.append($dataComplete_By);
+        $tableBody.append($tableRow);
+        $tableData.css("display", "block");
+        $addTodo.show();
+        $userH1.remove();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+}
+
+async function clickToViewThemes() {
+  const $themeBtn = $(".theme_change");
+  const listData = await $.get("/lists/themes");
+
+  //navbar_color
+  //input_color
+  //hr_color
+  //background_color
+  //text_color
+  //border_color
+  const $html = $("html");
+  const $navbarColor = $("nav");
+  const $button = $("button");
+  const $inputs = $("input[type = text]");
+  const $thead = $(".sticky-header");
+  const $h1 = $("h1");
+  const $h2 = $("h2");
+  const $trashcan = $("img");
+
+  const themeData = {
+    light: { index: 0 },
+    dark: { index: 1 },
+    new_year: { index: 2 },
+    valentine: { index: 3 },
+    fourth_of_july: { index: 4 },
+    halloween: { index: 5 },
+    thanksgiving: { index: 6 },
+    xmas: { index: 7 },
+  };
+
+  $themeBtn.on("click", function () {
+    const $selectedOption = $("#themes option:selected").val();
+    const selectedTheme = themeData[$selectedOption];
+
+    if (selectedTheme) {
+      const themeArray = [
+        listData[selectedTheme.index].id, //0
+        listData[selectedTheme.index].theme, //1
+        listData[selectedTheme.index].navbar_color, //2
+        listData[selectedTheme.index].input_color, //3
+        listData[selectedTheme.index].hr_color, //4
+        listData[selectedTheme.index].background_color, //5
+        listData[selectedTheme.index].text_color, //6
+        listData[selectedTheme.index].border_color, //7
+      ];
+      console.log(themeArray);
+
+      $html.css({ "background-color": themeArray[5], color: themeArray[6] });
+      $button.css({
+        border: `${themeArray[7]} solid 5px`,
+        "background-color": themeArray[2],
+        color: themeArray[6],
+      });
+      $navbarColor.css({
+        "background-color": themeArray[2],
+        color: themeArray[6],
+      });
+      $inputs.css("background-color", themeArray[3]);
+      $thead.css("background-color", themeArray[2]);
+      $h1.css("color", themeArray[6]);
+      $h2.css("color", themeArray[6]);
+      $trashcan.css("background-color", themeArray[5]);
+    }
+  });
+}
+
+// $("#selectedId option : selected").val()
+// var select = document.getElementById("mySelect");
+// var selectedOption = select.options[select.selectedIndex];
+
+// theme TEXT,
+// navbar_color TEXT,
+// input_color TEXT,
+// hr_color TEXT,
+// background_color TEXT,
+// text_color TEXT,
+// border_color TEXT,

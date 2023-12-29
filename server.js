@@ -6,6 +6,7 @@ import fs from "fs";
 const app = express();
 const { Pool } = pg;
 const expressPort = process.env.PORT;
+let userID;
 
 const pool = new Pool({
   user: "xxjrtxx",
@@ -19,7 +20,7 @@ const pool = new Pool({
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-
+// -------------------------------------------------------------------_GET ROUTE TO SEE ALL THEMES------------------------------------------
 app.get("/lists/themes", async (req, res) => {
   try {
     const { rows } = await pool.query("SELECT * from themes");
@@ -28,16 +29,18 @@ app.get("/lists/themes", async (req, res) => {
     res.status(404).send("No data found");
   }
 });
-
+// --------------------------------------------------------------GET ROUTE TO VIEW USER-------------------------------------------
 app.get("/lists/users", async (req, res) => {
   try {
     const { rows } = await pool.query("SELECT * from users");
+    let lastRow = rows.length - 1;
+    userID = rows[lastRow].user_id;
     res.status(200).send(rows);
   } catch (error) {
     res.status(404).send("No data found");
   }
 });
-
+// ------------------------------------------------------POST ROUTE TO ADD USER-----------------------------------------------
 app.post("/lists/users", async (req, res) => {
   const { firstname } = req.body;
   try {
@@ -49,6 +52,33 @@ app.post("/lists/users", async (req, res) => {
       `SELECT * FROM users ORDER BY user_id DESC LIMIT 1`
     );
     const newUser = newUserQuery.rows[0];
+    res.status(201).redirect("/");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+// ----------------------------------------------------GET ROUTE TO VIEW ALL TASK/COMPLETE-BY--------------------------------------------
+app.get("/lists/todo", async (req, res) => {
+  try {
+    const { rows } = await pool.query("SELECT * from todo_list");
+    res.status(200).send(rows);
+  } catch (error) {
+    res.status(404).send("No data found");
+  }
+});
+// ------------------------------------------------------POST ROUTE TO ADD TASK/COMPLETE-BY-------------------------------------------
+app.post("/lists/todo", async (req, res) => {
+  const { task, complete_by } = req.body;
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO todo_list (task, complete_by, user_id) VALUES ($1, $2, $3)`,
+      [task, complete_by, userID]
+    );
+    const todoTaskQuery = await pool.query(
+      `SELECT * FROM todo_list ORDER BY user_id DESC LIMIT 1`
+    );
+    const newTask = todoTaskQuery.rows[0];
     res.status(201).redirect("/");
   } catch (error) {
     console.error(error);

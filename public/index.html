@@ -15,7 +15,10 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
@@ -32,14 +35,36 @@
       <div>
         <h1 class="todo">To-Do List</h1>
       </div>
-      <div>
+      <div class="theme-div">
         <h1 class="theme">
           <img
             class="theme_change"
             src="./images/icons/change_theme_icon.png"
             alt=""
           />
+          <!-- <select name="theme" id="theme">
+              <option value="one">one</option>
+            </select> -->
         </h1>
+      </div>
+      <div>
+        <label for="select_a_theme"></label>
+        <form action="" id="select_a_theme">
+          <select name="themes" id="themes">
+            <option selected="selected" class="dark" value="dark">Dark</option>
+            <option class="light" value="light">Light</option>
+            <option class="new_year" value="new_year">New Year</option>
+            <option class="valentine" value="valentine">Valentine</option>
+            <option class="fourth_of_july" value="fourth_of_july">
+              Fourth Of July
+            </option>
+            <option class="halloween" value="halloween">Halloween</option>
+            <option class="thanksgiving" value="thanksgiving">
+              Thanksgiving
+            </option>
+            <option class="xmas" value="xmas">Xmas</option>
+          </select>
+        </form>
       </div>
     </nav>
     <!-- ------------------------------------------------------------------------------<HR>----------------------------------------------------------------------------- -->
@@ -53,53 +78,63 @@
       <!-- -------------------------------------------------MAIN SECTION 1 //// TO-DO FORM----------------------------------------------------------------------------->
       <section class="form-container">
         <form action="/lists/users" method="POST" class="users">
-          <input 
-            class="input is-rounded firstname"
+          <input
+            class="input firstname"
             type="text"
             name="firstname"
-            placeholder="First Name"
-            required/>
-          <button class = "submit">Submit</button>
+            autocomplete="off"
+            placeholder="Enter your first name"
+            onfocus="this.value=''"
+            required
+          />
+
+          <button class="submit">Submit</button>
         </form>
       </section>
       <section>
         <h1 class="h1_firstname"></h1>
       </section>
-      <section class = "add-todo"> 
+      <section class="add-todo">
         <h2>Add new item</h2>
-        <img class ="img-todo" src="./images/icons/Add_Item_Icon.png" alt="">
+        <img class="img-todo" src="./images/icons/Add_Item_Icon.png" alt="" />
       </section>
 
-      <!-- <section class="todo-data">
+      <section class="todo-data">
         <form action="/lists/todo" method="POST" class="todo-list-data">
-          <input 
-            class="input is-rounded firstname"
-            type="text"
-            name="firstname"
-            placeholder="First Name"
-            required/>
-          <button>Submit</button>
+          <div class="todo-form-wrapper">
+            <input
+              class="input task has-text-centered"
+              type="text"
+              name="task"
+              autocomplete="off"
+              placeholder="Enter new task"
+              onfocus="this.value=''"
+              required
+            />
+            <input
+              class="input complete_by has-text-centered"
+              type="text"
+              name="complete_by"
+              autocomplete="off"
+              placeholder="Time to complete"
+              required
+            />
+            <button class="submit-todo">Submit</button>
+          </div>
         </form>
-      </section> -->
-      <section class = 'table-data'>
-        <table class="table is-bordered is-stripe" >
-          <thead>
-            <tr class="is-selected">
-              <th class = "header-1 has-text-centered">Task</th>
-              <th class = "header-2 has-text-centered">Complete-By</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Take out the trash</td>
-              <td>By tomorrow</td>
-            </tr>
-              <td>Wash the car</td>
-              <td>Today</td>
-            </tr>
-          </tbody>
-        </table>
       </section>
+
+      <table class="table is-bordered is-stripe has-sticky-header">
+        <thead>
+          <tr>
+            <th class="header-1 has-text-centered sticky-header">Task</th>
+            <th class="header-2 has-text-centered sticky-header">
+              Complete-By
+            </th>
+          </tr>
+        </thead>
+        <tbody class="tbody-todo"></tbody>
+      </table>
     </main>
     <!-- --------------------------------------------------------------------------------SCRIPTS------------------------------------------------------------------------------ -->
     <script
