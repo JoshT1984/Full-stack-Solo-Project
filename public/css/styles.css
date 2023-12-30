@@ -11,7 +11,6 @@ nav {
   padding-right: 3rem;
   padding-top: 3rem;
   padding-bottom: 1rem;
-  background-color: purple;
 }
 
 nav .list_select {
@@ -238,7 +237,7 @@ th.sticky-header {
   width: 16rem;
 }
 
-.trash {
+tr img {
   position: absolute;
   transition-duration: 100ms;
   width: 2.5rem;
@@ -248,7 +247,7 @@ th.sticky-header {
   margin-top: -0.25rem;
 }
 
-.trash:hover {
+tr img:hover {
   width: 3.1rem;
   height: 3.1rem;
   margin-top: -0.05rem;
@@ -264,3 +263,5 @@ th.sticky-header {
   margin-right: 1rem;
   margin-top: 0.5rem;
 }
+
+

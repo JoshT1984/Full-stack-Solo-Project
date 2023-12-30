@@ -1,16 +1,15 @@
 let userId;
 clickToViewThemes();
-getDate();
+// getDate();
 buttonClick();
 taskTable();
-
-// ----------------------------------------------------------------------Event Listener To View Themes------------------------------------------------------------
+let taskTracker = 0;
 
 // ----------------------------------------------------------------------GET DATE------------------------------------------------------------------------------
-function getDate() {
-  const date = new Date();
-  let $date = $(".date_and_time").html(date.toDateString());
-}
+// function getDate() {
+//   const date = new Date();
+//   let $date = $(".date_and_time").html(date.toDateString());
+// }
 // ----------------------------------------------------------------------------------GET USER DATA-----------------------------------------------------
 async function getUserData() {
   try {
@@ -28,7 +27,8 @@ async function getUserData() {
     console.error(`Error: ${err}`);
   }
 }
-// --------------------------------------------------------------------------------POST FOR USER---------------------------------------------------
+
+// --------------------------------------------------------------------------------POST Method to add user---------------------------------------------------
 function buttonClick() {
   let $addTodo = $(".add-todo");
   let $submitBtn = $(".submit");
@@ -62,25 +62,25 @@ function buttonClick() {
     }
   });
 }
-
+// -----------------------------------------------------Function to show todo selection----------------------------------
 function showTodoInput() {
   let $addTodo = $(".add-todo");
   let $imgTodo = $(".img-todo");
   let $todoInputs = $(".todo-form-wrapper");
-  // -----------------------------------------------------Add task button click-----------------------------------
+
   $imgTodo.on("click", function () {
+    taskTracker++;
     $todoInputs.css("display", "flex");
     $addTodo.hide();
   });
 }
-
+// -----------------------------------------------------Function to show TASK/COMPLETE-BY TABLE-----------------------------------
 function taskTable() {
   let $addTodo = $(".add-todo");
   let $tableData = $(".table");
   let $tableBody = $(".tbody-todo");
   let $inputOne;
   let $inputTwo;
-
   const $userH1 = $(".h1_firstname");
 
   let $todoInputs = $(".todo-form-wrapper");
@@ -90,7 +90,7 @@ function taskTable() {
     $inputTwo = $(".complete_by").val();
     let $imgSpan = $("<img/>")
       .attr("src", "../images/icons/trash3.png")
-      .addClass("trash");
+      .addClass("trash" + taskTracker);
     let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
     e.preventDefault();
 
@@ -111,29 +111,24 @@ function taskTable() {
         let $dataTask = $("<td/>").text($inputOne).prepend($imgSpan);
         let $dataComplete_By = $("<td/>").text($inputTwo).append($checkbox);
         let $tableRow = $("<tr/>").append($dataTask);
+        $tableRow.addClass(`_${taskTracker}`);
 
         $tableRow.append($dataComplete_By);
         $tableBody.append($tableRow);
         $tableData.css("display", "block");
         $addTodo.show();
         $userH1.remove();
+        deleteTodoTask();
       })
       .catch((error) => {
         console.error(error);
       });
   });
 }
-
+// -----------------------------------------------------Function for theme color change functionality-----------------------------------
 async function clickToViewThemes() {
   const $themeBtn = $(".theme_change");
   const listData = await $.get("/lists/themes");
-
-  //navbar_color
-  //input_color
-  //hr_color
-  //background_color
-  //text_color
-  //border_color
   const $html = $("html");
   const $navbarColor = $("nav");
   const $button = $("button");
@@ -169,7 +164,6 @@ async function clickToViewThemes() {
         listData[selectedTheme.index].text_color, //6
         listData[selectedTheme.index].border_color, //7
       ];
-      console.log(themeArray);
 
       $html.css({ "background-color": themeArray[5], color: themeArray[6] });
       $button.css({
@@ -181,7 +175,7 @@ async function clickToViewThemes() {
         "background-color": themeArray[2],
         color: themeArray[6],
       });
-      $inputs.css("background-color", themeArray[3]);
+      $inputs.css({ "background-color": themeArray[3], color: themeArray[6] });
       $thead.css("background-color", themeArray[2]);
       $h1.css("color", themeArray[6]);
       $h2.css("color", themeArray[6]);
@@ -190,14 +184,45 @@ async function clickToViewThemes() {
   });
 }
 
-// $("#selectedId option : selected").val()
-// var select = document.getElementById("mySelect");
-// var selectedOption = select.options[select.selectedIndex];
+async function deleteTodoTask() {
+  try {
+    let $tableRow = $(`._${taskTracker}`);
+    let $trashBtn = $(".trash" + taskTracker);
+    let getTaskData = await $.get("/lists/todo/");
+    $trashBtn.on("click", function () {
+      let btnClass = $(this).attr("class");
+      let lastIndexString = btnClass.slice(-1).toString();
+      removeAnim($($tableRow));
+      const deleteTask = fetch(`/lists/todo/${lastIndexString}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-// theme TEXT,
-// navbar_color TEXT,
-// input_color TEXT,
-// hr_color TEXT,
-// background_color TEXT,
-// text_color TEXT,
-// border_color TEXT,
+function removeAnim(tablerow) {
+  const $html = $("html").css("background-color");
+
+  tablerow.css({
+    position: "relative",
+    "background-color": $html,
+  });
+
+  tablerow.animate(
+    { rotation: -90 },
+    {
+      duration: 750,
+      step: function (now, fx) {
+        $(this).css({ transform: "rotate(" + now + "deg)" });
+      },
+    }
+  );
+  setTimeout(() => tablerow.animate({ top: "500px" }), 850);
+  setTimeout(() => tablerow.animate({ right: "1000px" }), 1200);
+  setTimeout(() => tablerow.remove(), 1500);
+}

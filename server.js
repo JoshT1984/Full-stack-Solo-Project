@@ -85,11 +85,10 @@ app.post("/lists/todo", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-//////////////////////////////////////////////////////////////DELETE METHOD TO DELETE USERS///////////////////////////////////////////////////////
-app.delete("/lists/users/:id", async (req, res) => {
+//////////////////////////////////////////////////////////////DELETE METHOD TO DELETE TASK/COMPLETE-BY///////////////////////////////////////////////////////
+app.delete("/lists/todo/:id", async (req, res) => {
   const { id } = req.params;
-  const { firstname } = req.body;
-  const { lastname } = req.body;
+
   const parsedId = parseInt(id, 10);
 
   if (!Number.isInteger(parsedId)) {
@@ -98,19 +97,15 @@ app.delete("/lists/users/:id", async (req, res) => {
       .send("Not Found. Invalid index. Please provide an integer.");
   }
   try {
-    let rowQuery = await pool.query("SELECT COUNT(*) FROM users");
+    let rowQuery = await pool.query("SELECT COUNT(*) FROM todo_list");
     let totalRowsArray = rowQuery.rows;
     let totalRowsNumber = totalRowsArray[0].count;
 
-    if (parsedId >= 0 && parsedId <= totalRowsNumber) {
+    if (parsedId >= 0) {
       const { rows } = await pool.query(
-        `DELETE from users WHERE user_id = ${id}`
+        `DELETE from todo_list WHERE id = ${id}`
       );
-      res
-        .status(200)
-        .send(
-          `Deleted data from ROW: ${id} containing ${firstname}, ${lastname}`
-        );
+      res.status(200).send(`Deleted data from ROW: ${id}`);
     } else {
       res.status(404).send("Outside range of table!");
     }
