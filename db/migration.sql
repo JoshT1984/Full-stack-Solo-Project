@@ -15,7 +15,7 @@ CREATE TABLE themes (
     theme TEXT,
     navbar_color TEXT,
     input_color TEXT,
-    hr_color TEXT,
+    table_color TEXT,
     background_color TEXT,
     text_color TEXT,
     border_color TEXT,

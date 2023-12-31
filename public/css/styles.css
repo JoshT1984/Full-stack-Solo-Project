@@ -37,6 +37,13 @@ nav .theme_change:hover {
   opacity: 0.75;
 }
 
+#theme-form {
+  position: absolute;
+  right: 0;
+  margin-right: 2rem;
+  display: none;
+}
+
 h1.todo {
   font-size: 5rem;
 }
@@ -262,6 +269,9 @@ tr img:hover {
   right: 0;
   margin-right: 1rem;
   margin-top: 0.5rem;
+  color: purple;
 }
 
-
+input[type="checkbox"] {
+  accent-color: #000000;
+}

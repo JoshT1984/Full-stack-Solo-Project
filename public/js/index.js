@@ -1,9 +1,9 @@
 let userId;
-clickToViewThemes();
 // getDate();
 buttonClick();
 taskTable();
 let taskTracker = 0;
+clickToViewThemes();
 
 // ----------------------------------------------------------------------GET DATE------------------------------------------------------------------------------
 // function getDate() {
@@ -27,7 +27,6 @@ async function getUserData() {
     console.error(`Error: ${err}`);
   }
 }
-
 // --------------------------------------------------------------------------------POST Method to add user---------------------------------------------------
 function buttonClick() {
   let $addTodo = $(".add-todo");
@@ -74,7 +73,7 @@ function showTodoInput() {
     $addTodo.hide();
   });
 }
-// -----------------------------------------------------Function to show TASK/COMPLETE-BY TABLE-----------------------------------
+// ---------------------------------------------------------------------------------Function to show TASK TABLE-----------------------------------
 function taskTable() {
   let $addTodo = $(".add-todo");
   let $tableData = $(".table");
@@ -127,8 +126,11 @@ function taskTable() {
 }
 // -----------------------------------------------------Function for theme color change functionality-----------------------------------
 async function clickToViewThemes() {
+  setInitialTheme();
+  const $themeform = $("#theme-form");
   const $themeBtn = $(".theme_change");
   const listData = await $.get("/lists/themes");
+  const $tableBody = $(".tbody-todo");
   const $html = $("html");
   const $navbarColor = $("nav");
   const $button = $("button");
@@ -137,6 +139,7 @@ async function clickToViewThemes() {
   const $h1 = $("h1");
   const $h2 = $("h2");
   const $trashcan = $("img");
+  let themeArray;
 
   const themeData = {
     light: { index: 0 },
@@ -149,17 +152,24 @@ async function clickToViewThemes() {
     xmas: { index: 7 },
   };
 
-  $themeBtn.on("click", function () {
+  $themeBtn.on("click", function (e) {
+    $themeform.show();
+    $themeBtn.hide();
+  });
+
+  $("#themes").on("click", function () {
     const $selectedOption = $("#themes option:selected").val();
     const selectedTheme = themeData[$selectedOption];
+    $themeform.hide();
+    $themeBtn.show();
 
     if (selectedTheme) {
-      const themeArray = [
+      themeArray = [
         listData[selectedTheme.index].id, //0
         listData[selectedTheme.index].theme, //1
         listData[selectedTheme.index].navbar_color, //2
         listData[selectedTheme.index].input_color, //3
-        listData[selectedTheme.index].hr_color, //4
+        listData[selectedTheme.index].table_color, //4
         listData[selectedTheme.index].background_color, //5
         listData[selectedTheme.index].text_color, //6
         listData[selectedTheme.index].border_color, //7
@@ -179,11 +189,72 @@ async function clickToViewThemes() {
       $thead.css("background-color", themeArray[2]);
       $h1.css("color", themeArray[6]);
       $h2.css("color", themeArray[6]);
-      $trashcan.css("background-color", themeArray[5]);
+      $trashcan.css("background-color", themeArray[2]);
+      $tableBody.css("background-color", themeArray[4]);
     }
   });
 }
+// ----------------------------------------------------------------Sets Light mode as initial theme------------------------------------------------------
+async function setInitialTheme() {
+  const listData = await $.get("/lists/themes");
+  const $themeform = $("#theme-form");
+  const $themeBtn = $(".theme_change");
+  const $tableBody = $(".tbody-todo");
+  const $html = $("html");
+  const $navbarColor = $("nav");
+  const $button = $("button");
+  const $inputs = $("input[type = text]");
+  const $thead = $(".sticky-header");
+  const $h1 = $("h1");
+  const $h2 = $("h2");
+  const $trashcan = $("img");
+  let themeArray;
 
+  const themeData = {
+    light: { index: 0 },
+    dark: { index: 1 },
+    new_year: { index: 2 },
+    valentine: { index: 3 },
+    fourth_of_july: { index: 4 },
+    halloween: { index: 5 },
+    thanksgiving: { index: 6 },
+    xmas: { index: 7 },
+  };
+
+  const $selectedOption = $("#themes option:selected").val();
+  const selectedTheme = themeData[$selectedOption];
+
+  if (selectedTheme) {
+    themeArray = [
+      listData[selectedTheme.index].id, //0
+      listData[selectedTheme.index].theme, //1
+      listData[selectedTheme.index].navbar_color, //2
+      listData[selectedTheme.index].input_color, //3
+      listData[selectedTheme.index].table_color, //4
+      listData[selectedTheme.index].background_color, //5
+      listData[selectedTheme.index].text_color, //6
+      listData[selectedTheme.index].border_color, //7
+    ];
+
+    $html.css({ "background-color": themeArray[5], color: themeArray[6] });
+    $button.css({
+      border: `${themeArray[7]} solid 5px`,
+      "background-color": themeArray[2],
+      color: themeArray[6],
+    });
+    $navbarColor.css({
+      "background-color": themeArray[2],
+      color: themeArray[6],
+    });
+    $inputs.css({ "background-color": themeArray[3], color: themeArray[6] });
+    $thead.css("background-color", themeArray[2]);
+    $h1.css("color", themeArray[6]);
+    $h2.css("color", themeArray[6]);
+    $trashcan.css("background-color", themeArray[2]);
+    $tableBody.css("background-color", themeArray[4]);
+  }
+}
+// ----------------------------------------------------------------FUNCTION TO DELETE TASKS ------------------------------------------------------
 async function deleteTodoTask() {
   try {
     let $tableRow = $(`._${taskTracker}`);
@@ -204,7 +275,7 @@ async function deleteTodoTask() {
     console.error(error);
   }
 }
-
+// ------------------------------------------------------------------------------REMOVE ANIMATION FUNCTION ---------------------------------------------------
 function removeAnim(tablerow) {
   const $html = $("html").css("background-color");
 
@@ -212,7 +283,7 @@ function removeAnim(tablerow) {
     position: "relative",
     "background-color": $html,
   });
-
+  // ------------------------------------------------------------------------------USES STEP LOGIC WITH ANIMATE-----------------------------------------------------
   tablerow.animate(
     { rotation: -90 },
     {
