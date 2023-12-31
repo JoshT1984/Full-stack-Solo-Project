@@ -85,6 +85,31 @@ app.post("/lists/todo", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+// ----------------------------------------------------------................................PATCH METHODS.............................................................
+
+app.patch("/lists/todo/:id", async (req, res) => {
+  const { id } = req.params;
+  const { task, complete_by, user_id } = req.body;
+
+  try {
+    await pool.query(
+      `UPDATE todo_list SET task = $1, complete_by = $2, user_id  = $3 WHERE id = $4`,
+      [task, complete_by, user_id, id]
+    );
+    const { rows } = await pool.query(`SELECT * FROM todo_list WHERE id = $1`, [
+      id,
+    ]);
+
+    if (rows.length > 0) {
+      res.status(200).send(rows[0]);
+    } else {
+      res.status(404).send("Outside range of table");
+    }
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
 //////////////////////////////////////////////////////////////DELETE METHOD TO DELETE TASK/COMPLETE-BY///////////////////////////////////////////////////////
 app.delete("/lists/todo/:id", async (req, res) => {
   const { id } = req.params;

@@ -91,6 +91,11 @@ function taskTable() {
     let $imgSpan = $("<img/>")
       .attr("src", "../images/icons/trash3.png")
       .addClass("trash" + taskTracker);
+    $imgSpan.addClass("trashicon");
+    let $imgEdit = $("<img/>")
+      .attr("src", "../images/icons/edit_icon.png")
+      .addClass("edit" + taskTracker);
+    $imgEdit.addClass("editicon");
     let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
     e.preventDefault();
 
@@ -114,7 +119,7 @@ function taskTable() {
         console.log("Success:", data);
         $todoInputs.hide();
 
-        let $dataTask = $("<td/>").text($inputOne).prepend($imgSpan);
+        let $dataTask = $("<td/>").text($inputOne).prepend($imgSpan, $imgEdit);
         let $dataComplete_By = $("<td/>").text($inputTwo).append($checkbox);
         let $tableRow = $("<tr/>").append($dataTask);
         $tableRow.addClass(`_${taskTracker}`);
@@ -124,6 +129,7 @@ function taskTable() {
         $tableData.css("display", "block");
         $addTodo.show();
         $userH1.remove();
+        updateTodoTask();
         deleteTodoTask();
       })
       .catch((error) => {
@@ -261,6 +267,32 @@ async function setInitialTheme() {
     $tableBody.css("background-color", themeArray[4]);
   }
 }
+
+async function updateTodoTask() {
+  try {
+    let $tableRow = $(`._${taskTracker}`);
+    let $todoInputs = $(".todo-form-wrapper");
+    let $addTodo = $(".add-todo");
+    let $editbtn = $(".edit" + taskTracker);
+
+    let getTaskData = await $.get("/lists/todo/");
+    $editbtn.on("click", function () {
+      let btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
+      let lastIndexString = btnClass.slice(-1).toString();
+      $todoInputs.show();
+      $addTodo.hide();
+
+      const updateTask = fetch(`/lists/todo/${lastIndexString}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
 // ----------------------------------------------------------------FUNCTION TO DELETE TASKS ------------------------------------------------------
 async function deleteTodoTask() {
   try {
@@ -268,7 +300,7 @@ async function deleteTodoTask() {
     let $trashBtn = $(".trash" + taskTracker);
     let getTaskData = await $.get("/lists/todo/");
     $trashBtn.on("click", function () {
-      let btnClass = $(this).attr("class");
+      let btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
       let lastIndexString = btnClass.slice(-1).toString();
       removeAnim($($tableRow));
       const deleteTask = fetch(`/lists/todo/${lastIndexString}`, {
