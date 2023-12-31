@@ -42,9 +42,6 @@
             src="./images/icons/change_theme_icon.png"
             alt=""
           />
-          <!-- <select name="theme" id="theme">
-              <option value="one">one</option>
-            </select> -->
         </h1>
       </div>
       <div id="theme-form">
@@ -71,9 +68,6 @@
     <hr />
     <main>
       <!-- ------------------------------------------------------------------ MAIN HEADER----------------------------------------------------------------------------->
-      <!-- <header>
-        <h1 class="date_and_time">DATE AND TIME</h1>
-      </header> -->
 
       <!-- -------------------------------------------------MAIN SECTION 1 //// TO-DO FORM----------------------------------------------------------------------------->
       <section class="form-container">
@@ -84,10 +78,8 @@
             name="firstname"
             autocomplete="off"
             placeholder="Enter your first name"
-            onfocus="this.value=''"
-            required
+            required="required"
           />
-
           <button class="submit">Submit</button>
         </form>
       </section>
@@ -108,8 +100,7 @@
               name="task"
               autocomplete="off"
               placeholder="Enter new task"
-              onfocus="this.value=''"
-              required
+              required="required"
             />
             <input
               class="input complete_by has-text-centered"
@@ -117,9 +108,11 @@
               name="complete_by"
               autocomplete="off"
               placeholder="Time to complete"
-              required
+              required="required"
             />
-            <button class="submit-todo">Submit</button>
+            <button class="submit-todo" type="submit" required="required">
+              Submit
+            </button>
           </div>
         </form>
       </section>

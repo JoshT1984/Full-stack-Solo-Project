@@ -87,12 +87,19 @@ function taskTable() {
   $tableDataBtn.on("click", function (e) {
     $inputOne = $(".task").val();
     $inputTwo = $(".complete_by").val();
+
     let $imgSpan = $("<img/>")
       .attr("src", "../images/icons/trash3.png")
       .addClass("trash" + taskTracker);
     let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
     e.preventDefault();
 
+    if ($inputOne.length > 0) {
+      console.log("good job");
+    } else {
+      console.log("Enter a task");
+      return;
+    }
     let todoData = fetch("/lists/todo", {
       method: "POST",
       headers: {
