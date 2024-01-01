@@ -90,12 +90,12 @@ function taskTable() {
 
     let $imgSpan = $("<img/>")
       .attr("src", "../images/icons/trash3.png")
-      .addClass("trash" + taskTracker);
-    $imgSpan.addClass("trashicon");
+      .addClass("trashicon");
+    $imgSpan.addClass("trash" + taskTracker);
     let $imgEdit = $("<img/>")
       .attr("src", "../images/icons/edit_icon.png")
-      .addClass("edit" + taskTracker);
-    $imgEdit.addClass("editicon");
+      .addClass("editicon");
+    $imgEdit.addClass("edit" + taskTracker);
     let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
     e.preventDefault();
 
@@ -268,31 +268,56 @@ async function setInitialTheme() {
   }
 }
 
-async function updateTodoTask() {
-  try {
-    let $tableRow = $(`._${taskTracker}`);
-    let $todoInputs = $(".todo-form-wrapper");
-    let $addTodo = $(".add-todo");
-    let $editbtn = $(".edit" + taskTracker);
+function updateTodoTask() {
+  let btnClass;
+  let lastIndexString;
+  let $updateInputs = $(".update_form_wrapper");
+  let $addTodo = $(".add-todo");
+  let $editbtn = $(".edit" + taskTracker);
+  let $taskEdit;
+  let $dateEdit;
+  let $updateBtn = $(".submit_update");
 
-    let getTaskData = await $.get("/lists/todo/");
-    $editbtn.on("click", function () {
-      let btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
-      let lastIndexString = btnClass.slice(-1).toString();
-      $todoInputs.show();
-      $addTodo.hide();
+  $editbtn.on("click", function (e) {
+    btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
+    lastIndexString = btnClass.slice(-1).toString();
+    $updateInputs.css("display", "flex");
+    $addTodo.hide();
+  });
 
-      const updateTask = fetch(`/lists/todo/${lastIndexString}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  let $submitUpdate = $(".submit_update");
+
+  $submitUpdate.on("click", function (e) {
+    $taskEdit = $(".task_update").val();
+    $dateEdit = $(".complete_by_update").val();
+    e.preventDefault();
+
+    fetch(`/lists/todo/${lastIndexString}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        task: $taskEdit,
+        complete_by: $dateEdit,
+        user_id: userId,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status : ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(`PATCH request successful:`, data);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    });
-  } catch (error) {
-    console.error(error);
-  }
+  });
 }
+
 // ----------------------------------------------------------------FUNCTION TO DELETE TASKS ------------------------------------------------------
 async function deleteTodoTask() {
   try {

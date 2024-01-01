@@ -292,3 +292,50 @@ tr img.editicon:hover {
 input[type="checkbox"] {
   accent-color: #000000;
 }
+
+/* -------------------------------patch update ----------------------------------- */
+
+@keyframes myAnimFive {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.update_form_wrapper {
+  display: flex;
+  animation: myAnimFive 1.75s ease 0s 1 normal forwards;
+  font-family: "Poppins", sans-serif;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.submit_update {
+  background-color: #1ea9f4;
+  padding: 0;
+  margin: 0;
+  margin-left: 2rem;
+}
+
+.update_data input[type="text"] {
+  margin: 2rem;
+  padding: 0;
+  font-size: 1.8rem;
+  height: 2.8rem;
+}
+
+.todo-update input[type="text"]:hover {
+  background-color: pink;
+}
+
+.task_update {
+  width: 40rem;
+}
+
+.complete_by_update {
+  width: 15rem;
+}

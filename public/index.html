@@ -92,7 +92,12 @@
       </section>
 
       <section class="todo-data">
-        <form action="/lists/todo" method="POST" class="todo-list-data">
+        <form
+          action="/lists/todo"
+          method="POST"
+          class="todo-list-data"
+          name="todo"
+        >
           <div class="todo-form-wrapper">
             <input
               class="input task has-text-centered"
@@ -128,6 +133,37 @@
         </thead>
         <tbody class="tbody-todo"></tbody>
       </table>
+      <!-- -----------------------------------------------------------------------patch data---------------------------------------------------- -->
+      <section class="update_data">
+        <form
+          action="/lists/todo"
+          method="POST"
+          class="patch_list_data"
+          name="update"
+        >
+          <div class="update_form_wrapper">
+            <input
+              class="task_update has-text-centered"
+              type="text"
+              name="task_update"
+              autocomplete="off"
+              placeholder="Enter task update"
+              required="required"
+            />
+            <input
+              class="complete_by_update has-text-centered"
+              type="text"
+              name="complete_by_update"
+              autocomplete="off"
+              placeholder="update complete-by time"
+              required="required"
+            />
+            <button class="submit_update" type="submit" required="required">
+              Submit
+            </button>
+          </div>
+        </form>
+      </section>
     </main>
     <!-- --------------------------------------------------------------------------------SCRIPTS------------------------------------------------------------------------------ -->
     <script
