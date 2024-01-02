@@ -15,28 +15,28 @@ const { Pool } = pg;
 const expressPort = process.env.PORT;
 let userID;
 
-const pool = new Pool({
-  user: "xxjrtxx",
-  host: "localhost",
-  password: "Passw0rd4U",
-  database: "themed_list_db",
-  port: 5432,
-});
-// const connectionString = process.env.DATABASE_URL;
-
 // const pool = new Pool({
-//   connectionString,
+//   user: "xxjrtxx",
+//   host: "localhost",
+//   password: "Passw0rd4U",
+//   database: "themed_list_db",
+//   port: 5432,
 // });
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool({
+  connectionString,
+});
+
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
-// app.set("views", path.join(__dirname + "/public"));
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname + "/public/views"));
 
 app.get("/lists/grocery", (req, res) => {
-  res.render("grocery.ejs");
+  res.render("grocery");
 });
 // -------------------------------------------------------------------_GET ROUTE TO SEE ALL THEMES------------------------------------------
 app.get("/lists/themes", async (req, res) => {

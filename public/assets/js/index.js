@@ -21,19 +21,12 @@ function render() {
 // }
 
 function listSelect() {
-  const $groceryHTML = $("#grocery");
   const $listSelect = $(".list_select").on("click", function () {
-    $groceryHTML.removeAttr("disabled");
-    // location.reload(true);
-
-    setTimeout(() => {
-      $(document).ready(function () {
-        $("body").removeClass("stylesCSS");
-      }),
-        1000;
-    });
+    const loadEJSGrocery = $.get("/lists/grocery");
+    window.location.href = "/lists/grocery";
   });
 }
+
 // ----------------------------------------------------------------------------------GET USER DATA-----------------------------------------------------
 async function getUserData() {
   try {
@@ -115,10 +108,10 @@ function taskTable() {
     let $inputTwo = $(".complete_by").val();
 
     let $imgSpan = $("<img/>")
-      .attr("src", "../images/icons/trash3.png")
+      .attr("src", "../assets/images/icons/trash3.png")
       .addClass(`trashicon trash${taskTracker}`);
     $imgEdit = $("<img/>")
-      .attr("src", "../images/icons/edit_icon.png")
+      .attr("src", "../assets/images/icons/edit_icon.png")
       .addClass(`editicon edit${taskTracker}`);
 
     let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
@@ -153,7 +146,11 @@ function taskTable() {
 
         let $dataComplete_By = $("<td/>")
           .text($inputTwo)
-          .addClass("complete" + taskTracker, "has-text-centered")
+          .addClass(
+            "complete" + taskTracker,
+            "has-text-centered",
+            "complete_by"
+          )
           .css("max-width", "200px");
 
         $trashEditDiv.prepend($imgSpan, $imgEdit, $dataTask);
@@ -206,6 +203,7 @@ async function clickToViewThemes() {
 
   // ---------------------------------------------------------Theme Change Event Listener------------------------------------
   $("#themes").on("click", function () {
+    const $tableDiv = $(".trashEditDiv");
     const $selectedOption = $("#themes option:selected").val();
     const selectedTheme = themeData[$selectedOption];
     $themeform.hide();
@@ -223,7 +221,12 @@ async function clickToViewThemes() {
         listData[selectedTheme.index].border_color, //7
       ];
 
-      $html.css({ "background-color": themeArray[5], color: themeArray[6] });
+      $html.css({
+        "background-color": themeArray[5],
+        color: themeArray[6],
+        borderTopColor: themeArray[2],
+      });
+
       $button.css({
         border: `${themeArray[7]} solid 5px`,
         "background-color": themeArray[2],
@@ -244,6 +247,7 @@ async function clickToViewThemes() {
 }
 // ----------------------------------------------------------------Sets Light mode as initial theme------------------------------------------------------
 async function setInitialTheme() {
+  const $tableDiv = $(".trashEditDiv");
   const listData = await $.get("/lists/themes");
   const $themeform = $("#theme-form");
   const $themeBtn = $(".theme_change");
@@ -284,7 +288,11 @@ async function setInitialTheme() {
       listData[selectedTheme.index].border_color, //7
     ];
 
-    $html.css({ "background-color": themeArray[5], color: themeArray[6] });
+    $html.css({
+      "background-color": themeArray[5],
+      color: themeArray[6],
+    });
+
     $button.css({
       border: `${themeArray[7]} solid 5px`,
       "background-color": themeArray[2],
@@ -299,7 +307,6 @@ async function setInitialTheme() {
     $h1.css("color", themeArray[6]);
     $h2.css("color", themeArray[6]);
     $trashcan.css("background-color", themeArray[2]);
-    $tableBody.css("background-color", themeArray[4]);
   }
 }
 

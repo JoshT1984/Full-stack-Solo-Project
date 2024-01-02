@@ -13,7 +13,6 @@ function render() {
   listSelect();
   // getDate();
 }
-
 // ----------------------------------------------------------------------GET DATE FROM API-------------------------------------------------------------------
 // function getDate() {
 //   const date = new Date();
@@ -24,14 +23,6 @@ function listSelect() {
   const $groceryHTML = $("#grocery");
   const $listSelect = $(".list_select").on("click", function () {
     $groceryHTML.removeAttr("disabled");
-    // location.reload(true);
-
-    setTimeout(() => {
-      $(document).ready(function () {
-        $("body").removeClass("stylesCSS");
-      }),
-        1000;
-    });
   });
 }
 // ----------------------------------------------------------------------------------GET USER DATA-----------------------------------------------------

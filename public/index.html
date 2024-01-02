@@ -24,14 +24,18 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
-    <link rel="stylesheet" href="./css/styles.css" id="styles" />
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
   </head>
 
   <body>
     <!-- --------------------------------------------------------------------- NAV BAR----------------------------------------------------------------- -->
     <nav>
       <div>
-        <img class="list_select" src="./images/icons/list_icon.png" alt="" />
+        <img
+          class="list_select"
+          src="/assets/images/icons/list_icon.png"
+          alt=""
+        />
       </div>
       <div>
         <h1 class="todo">To-Do List</h1>
@@ -40,20 +44,26 @@
         <h1 class="theme">
           <img
             class="theme_change"
-            src="./images/icons/change_theme_icon.png"
+            src="/assets/images/icons/change_theme_icon.png"
             alt=""
           />
         </h1>
       </div>
       <div id="theme-form">
-        <label for="select_a_theme"></label>
+        <label for="themes">Select a theme</label>
         <form action="" id="select_a_theme">
           <select name="themes" id="themes" multiple>
-            <option class="dark" value="dark">Dark</option>
-            <option selected="select" class="light" value="light">Light</option>
-            <option class="new_year" value="new_year">New Year</option>
-            <option class="valentine" value="valentine">Valentine</option>
-            <option class="fourth_of_july" value="fourth_of_july">
+            <option id="themes" class="dark" value="dark">Dark</option>
+            <option id="themes" selected="select" class="light" value="light">
+              Light
+            </option>
+            <option id="themes" class="new_year" value="new_year">
+              New Year
+            </option>
+            <option id="themes" class="valentine" value="valentine">
+              Valentine
+            </option>
+            <option id="themes" class="fourth_of_july" value="fourth_of_july">
               Fourth Of July
             </option>
             <option class="halloween" value="halloween">Halloween</option>
@@ -91,7 +101,11 @@
       </section>
       <section class="add-todo">
         <h2>Add new item</h2>
-        <img class="img-todo" src="./images/icons/Add_Item_Icon.png" alt="" />
+        <img
+          class="img-todo"
+          src="/assets/images/icons/Add_Item_Icon.png"
+          alt=""
+        />
       </section>
 
       <section class="todo-data">
@@ -129,7 +143,7 @@
         </form>
       </section>
 
-      <table class="table is-bordered is-stripe has-sticky-header">
+      <table class="table has-sticky-header">
         <thead>
           <tr>
             <th class="header-1 has-text-centered sticky-header">Task</th>
@@ -138,7 +152,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="tbody-todo"></tbody>
+        <tbody class="tbody-todo is-bordered"></tbody>
       </table>
       <!-- -----------------------------------------------------------------------patch data---------------------------------------------------- -->
       <section class="update_data">
@@ -182,6 +196,6 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
-    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="assets/js/index.js"></script>
   </body>
 </html>
