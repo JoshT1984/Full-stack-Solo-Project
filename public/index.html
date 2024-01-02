@@ -76,6 +76,8 @@
             class="input firstname"
             type="text"
             name="firstname"
+            minlength="1"
+            maxlength="12"
             autocomplete="off"
             placeholder="Enter your first name"
             required="required"
@@ -103,6 +105,8 @@
               class="input task has-text-centered"
               type="text"
               name="task"
+              minlength="1"
+              maxlength="35"
               autocomplete="off"
               placeholder="Enter new task"
               required="required"
@@ -111,6 +115,8 @@
               class="input complete_by has-text-centered"
               type="text"
               name="complete_by"
+              minlength="1"
+              maxlength="12"
               autocomplete="off"
               placeholder="Time to complete"
               required="required"
@@ -131,9 +137,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="tbody-todo">
-          
-        </tbody>
+        <tbody class="tbody-todo"></tbody>
       </table>
       <!-- -----------------------------------------------------------------------patch data---------------------------------------------------- -->
       <section class="update_data">
@@ -149,6 +153,8 @@
               type="text"
               name="task_update"
               autocomplete="off"
+              minlength="1"
+              maxlength="35"
               placeholder="Enter task update"
               required="required"
             />
@@ -157,7 +163,9 @@
               type="text"
               name="complete_by_update"
               autocomplete="off"
-              placeholder="update complete-by time"
+              minlength="1"
+              maxlength="12"
+              placeholder="Update timeline"
               required="required"
             />
             <button class="submit_update" type="submit" required="required">

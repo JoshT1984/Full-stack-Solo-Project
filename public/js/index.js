@@ -127,10 +127,14 @@ function taskTable() {
         let $trashEditDiv = $("<div/>").addClass("trashEditDiv");
         let $dataTask = $("<td/>")
           .text($inputOne)
-          .addClass("task" + taskTracker);
+          .addClass("task" + taskTracker, "has-text-centered")
+          .css("max-width", "600px");
+
         let $dataComplete_By = $("<td/>")
           .text($inputTwo)
-          .addClass("complete" + taskTracker);
+          .addClass("complete" + taskTracker, "has-text-centered")
+          .css("max-width", "200px");
+
         $trashEditDiv.prepend($imgSpan, $imgEdit, $dataTask);
 
         $tableRow.append($trashEditDiv, $dataComplete_By, $checkbox);
