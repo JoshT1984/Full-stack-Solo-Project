@@ -3,6 +3,13 @@ import pg from "pg";
 import "dotenv/config";
 import fs from "fs";
 
+//Using EJS with ESM (ECMAscript Modules)
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const { Pool } = pg;
 const expressPort = process.env.PORT;
@@ -17,9 +24,20 @@ const pool = new Pool({
 });
 // const connectionString = process.env.DATABASE_URL;
 
+// const pool = new Pool({
+//   connectionString,
+// });
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+// app.set("views", path.join(__dirname + "/public"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname + "/public/views"));
+
+app.get("/lists/grocery", (req, res) => {
+  res.render("grocery.ejs");
+});
 // -------------------------------------------------------------------_GET ROUTE TO SEE ALL THEMES------------------------------------------
 app.get("/lists/themes", async (req, res) => {
   try {
@@ -58,6 +76,7 @@ app.post("/lists/users", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 // ----------------------------------------------------GET ROUTE TO VIEW ALL TASK/COMPLETE-BY--------------------------------------------
 app.get("/lists/todo", async (req, res) => {
   try {
@@ -143,3 +162,5 @@ app.delete("/lists/todo/:id", async (req, res) => {
 app.listen(expressPort, () => {
   console.log(`listening on Port ${expressPort}`);
 });
+
+// https://fullstack-themed-lists-application.onrender.com

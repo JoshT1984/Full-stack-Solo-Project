@@ -1,0 +1,354 @@
+/* ---------------------------------------------NAV BAR------------------------------ */
+nav {
+    font-family: "Cedarville Cursive", cursive;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    justify-items: center;
+    align-items: center;
+    box-sizing: border-box;
+    column-gap: 15rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+  }
+  
+  nav .list_select {
+    width: 4rem;
+    height: 4rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav .list_select:hover {
+    transition-duration: 100ms;
+    margin-bottom: 5px;
+    opacity: 0.75;
+  }
+  
+  nav .theme_change {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  nav .theme_change:hover {
+    transition-duration: 100ms;
+    margin-bottom: 5px;
+    opacity: 0.75;
+  }
+  
+  #theme-form {
+    position: absolute;
+    right: 0;
+    margin-right: 2rem;
+    display: none;
+  }
+  
+  h1.todo {
+    font-size: 5rem;
+  }
+  
+  /* -----------------------------------------------Main Content ------------------------ */
+  
+  main {
+    display: grid;
+    justify-content: center;
+  }
+  
+  /* -------------------------------------------------FORM DATA----------------------------------- */
+  .form-container {
+    margin-top: 5rem;
+    width: 75vw;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    margin-bottom: 2rem;
+  }
+  
+  .form-container input {
+    text-align: center;
+    height: 3rem;
+    width: 20rem;
+    margin-right: 3rem;
+  }
+  
+  .form-container input:hover {
+    background-color: lightblue;
+  }
+  
+  .form-container input[type="text"] {
+    font-size: 1.8rem;
+  }
+  
+  button {
+    background-color: #1ea9f4;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 10%;
+    text-align: center;
+    font-size: 16px;
+    width: 4rem;
+    height: 2.65rem;
+    margin: 4px 2px;
+    opacity: 1;
+    transition: 0.3s;
+    margin-left: 1rem;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    opacity: 0.5;
+  }
+  
+  @keyframes myAnimOne {
+    0% {
+      transform: scale(0.35);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .h1_firstname {
+    margin: 2rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    animation: myAnimOne 3s ease 1s 1 normal forwards;
+    font-size: 3.5rem;
+    text-align: center;
+    letter-spacing: 0.25rem;
+  }
+  
+  @keyframes myAnimTwo {
+    0% {
+      transform: scale(0.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .add-todo h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    text-decoration: underline;
+    opacity: 0.5;
+    margin-right: 4rem;
+    padding: 2.5rem;
+  }
+  
+  .add-todo {
+    animation: myAnimTwo 1.75s ease 0s 1 normal forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    display: none;
+  }
+  
+  .img-todo:hover {
+    transition-duration: 100ms;
+    margin-top: -0.2rem;
+    opacity: 0.7;
+  }
+  /* ----------------------------------------------Form (task and time to complete)------------------------------ */
+  
+  @keyframes myAnimThree {
+    0% {
+      transform: scale(0.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .todo-form-wrapper {
+    display: flex;
+    animation: myAnimThree 1.75s ease 0s 1 normal forwards;
+    font-family: "Poppins", sans-serif;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    display: none;
+  }
+  
+  .submit-todo {
+    background-color: #1ea9f4;
+    padding: 0;
+    margin: 0;
+    margin-left: 2rem;
+  }
+  
+  .todo-data input[type="text"] {
+    margin: 2rem;
+    padding: 0;
+    font-size: 1.8rem;
+    height: 2.8rem;
+  }
+  
+  .todo-data input[type="text"]:hover {
+    background-color: pink;
+  }
+  
+  .task {
+    width: 40rem;
+  }
+  
+  .complete_by {
+    width: 15rem;
+  }
+  
+  /* -----------------------------------------------table data---------------------------------------- */
+  
+  @keyframes myAnimFour {
+    0% {
+      transform: scale(0.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .table {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    bottom: 0;
+    left: 50%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: -4rem;
+    margin-left: -32rem;
+    margin-bottom: 5rem;
+    animation: myAnimFour 1.5s ease 0s 1 normal forwards;
+    text-align: center;
+    font-size: 1.6rem;
+    display: none;
+  }
+  
+  th.sticky-header {
+    position: sticky;
+    top: 0;
+    background: #1ea9f4;
+    z-index: 10;
+  }
+  
+  .header-1 {
+    width: 48rem;
+  }
+  .header-2 {
+    width: 16rem;
+  }
+  
+  .trashEditDiv {
+    position: relative;
+    left: 0;
+    width: 48rem;
+    height: 4rem;
+  }
+  
+  .trashEditDiv td {
+    float: right;
+    border: none;
+    margin-left: 25rem;
+    /* text-wrap: nowrap; */
+    width: 50rem;
+  }
+  
+  .trashEditDiv .trashicon {
+    position: absolute;
+    transition-duration: 100ms;
+    left: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-left: 1.5rem;
+    margin-top: 0.8rem;
+  }
+  
+  .trashEditDiv .trashicon:hover {
+    width: 2.6rem;
+    height: 2.6rem;
+    opacity: 0.8;
+  }
+  
+  .trashEditDiv .editicon {
+    position: absolute;
+    transition-duration: 100ms;
+    left: 0;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin-left: 4.7rem;
+    margin-top: 0.9rem;
+  }
+  
+  .trashEditDiv .editicon:hover {
+    width: 2.3rem;
+    height: 2.3rem;
+    opacity: 0.9;
+  }
+  .checkbox {
+    position: absolute;
+    transition-duration: 100ms;
+    width: 1.5rem;
+    height: 1.5rem;
+    right: 0;
+    margin-right: 1.2rem;
+    margin-top: 1rem;
+    color: purple;
+  }
+  
+  input[type="checkbox"] {
+    accent-color: #000000;
+  }
+  
+  /* -------------------------------patch update ----------------------------------- */
+  
+  @keyframes myAnimFive {
+    0% {
+      transform: scale(0.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .update_form_wrapper {
+    display: flex;
+    animation: myAnimFive 1.75s ease 0s 1 normal forwards;
+    font-family: "Poppins", sans-serif;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    display: none;
+  }
+  
+  .submit_update {
+    background-color: #1ea9f4;
+    padding: 0;
+    margin: 0;
+    margin-left: 2rem;
+  }
+  
+  .update_data input[type="text"] {
+    margin: 2rem;
+    padding: 0;
+    font-size: 1.8rem;
+    height: 2.8rem;
+  }
+  
+  .todo-update input[type="text"]:hover {
+    background-color: pink;
+  }
+  
+  .task_update {
+    width: 40rem;
+  }
+  
+  .complete_by_update {
+    width: 15rem;
+  }
+  

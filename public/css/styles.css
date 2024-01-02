@@ -256,7 +256,6 @@ th.sticky-header {
   border: none;
   margin-left: 25rem;
   /* text-wrap: nowrap; */
-  background-color: yellow;
   width: 50rem;
 }
 
@@ -301,7 +300,6 @@ th.sticky-header {
   margin-top: 1rem;
   color: purple;
 }
-
 
 input[type="checkbox"] {
   accent-color: #000000;
