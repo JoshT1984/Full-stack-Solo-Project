@@ -1,11 +1,14 @@
 let userId;
+let $imgEdit;
+let $dataComplete_By;
 // getDate();
 buttonClick();
 taskTable();
 let taskTracker = 0;
+let indexTracker;
 clickToViewThemes();
 
-// ----------------------------------------------------------------------GET DATE------------------------------------------------------------------------------
+// ----------------------------------------------------------------------GET DATE FROM API-------------------------------------------------------------------
 // function getDate() {
 //   const date = new Date();
 //   let $date = $(".date_and_time").html(date.toDateString());
@@ -32,6 +35,7 @@ function buttonClick() {
   let $addTodo = $(".add-todo");
   let $submitBtn = $(".submit");
 
+  // ---------------------------------------------------------POST Username Event Listener------------------------------------
   $submitBtn.on("click", function (e) {
     let $inputOne = $(".firstname").val();
     if ($inputOne.length > 0) {
@@ -67,6 +71,7 @@ function showTodoInput() {
   let $imgTodo = $(".img-todo");
   let $todoInputs = $(".todo-form-wrapper");
 
+  // ---------------------------------------------------------Show Todolist Event Listener------------------------------------
   $imgTodo.on("click", function () {
     taskTracker++;
     $todoInputs.css("display", "flex");
@@ -78,24 +83,23 @@ function taskTable() {
   let $addTodo = $(".add-todo");
   let $tableData = $(".table");
   let $tableBody = $(".tbody-todo");
-  let $inputOne;
-  let $inputTwo;
   const $userH1 = $(".h1_firstname");
 
   let $todoInputs = $(".todo-form-wrapper");
   let $tableDataBtn = $(".submit-todo");
+
+  // ---------------------------------------------------------Task Table Event Listener------------------------------------
   $tableDataBtn.on("click", function (e) {
-    $inputOne = $(".task").val();
-    $inputTwo = $(".complete_by").val();
+    let $inputOne = $(".task").val();
+    let $inputTwo = $(".complete_by").val();
 
     let $imgSpan = $("<img/>")
       .attr("src", "../images/icons/trash3.png")
-      .addClass("trashicon");
-    $imgSpan.addClass("trash" + taskTracker);
-    let $imgEdit = $("<img/>")
+      .addClass(`trashicon trash${taskTracker}`);
+    $imgEdit = $("<img/>")
       .attr("src", "../images/icons/edit_icon.png")
-      .addClass("editicon");
-    $imgEdit.addClass("edit" + taskTracker);
+      .addClass(`editicon edit${taskTracker}`);
+
     let $checkbox = $(`<input type="checkbox" />`).addClass("checkbox");
     e.preventDefault();
 
@@ -119,18 +123,23 @@ function taskTable() {
         console.log("Success:", data);
         $todoInputs.hide();
 
-        let $dataTask = $("<td/>").text($inputOne).prepend($imgSpan, $imgEdit);
-        let $dataComplete_By = $("<td/>").text($inputTwo).append($checkbox);
-        let $tableRow = $("<tr/>").append($dataTask);
-        $tableRow.addClass(`_${taskTracker}`);
+        let $tableRow = $("<tr/>").addClass(`_${taskTracker}`);
+        let $trashEditDiv = $("<div/>").addClass("trashEditDiv");
+        let $dataTask = $("<td/>")
+          .text($inputOne)
+          .addClass("task" + taskTracker);
+        let $dataComplete_By = $("<td/>")
+          .text($inputTwo)
+          .addClass("complete" + taskTracker);
+        $trashEditDiv.prepend($imgSpan, $imgEdit, $dataTask);
 
-        $tableRow.append($dataComplete_By);
+        $tableRow.append($trashEditDiv, $dataComplete_By, $checkbox);
         $tableBody.append($tableRow);
         $tableData.css("display", "block");
         $addTodo.show();
         $userH1.remove();
-        updateTodoTask();
         deleteTodoTask();
+        updateTodoTask();
       })
       .catch((error) => {
         console.error(error);
@@ -170,6 +179,7 @@ async function clickToViewThemes() {
     $themeBtn.hide();
   });
 
+  // ---------------------------------------------------------Theme Change Event Listener------------------------------------
   $("#themes").on("click", function () {
     const $selectedOption = $("#themes option:selected").val();
     const selectedTheme = themeData[$selectedOption];
@@ -269,30 +279,37 @@ async function setInitialTheme() {
 }
 
 function updateTodoTask() {
+  let $dataTask = $(".task" + taskTracker);
+  let $completeTask = $(".complete" + taskTracker);
   let btnClass;
-  let lastIndexString;
+  let $lastIndexString;
   let $updateInputs = $(".update_form_wrapper");
   let $addTodo = $(".add-todo");
-  let $editbtn = $(".edit" + taskTracker);
   let $taskEdit;
   let $dateEdit;
-  let $updateBtn = $(".submit_update");
-
-  $editbtn.on("click", function (e) {
-    btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
-    lastIndexString = btnClass.slice(-1).toString();
-    $updateInputs.css("display", "flex");
-    $addTodo.hide();
-  });
-
   let $submitUpdate = $(".submit_update");
 
+  // -------------------------------------------------------Edit Button Event Listener------------------------------------
+  $imgEdit.off("click").on("click", function () {
+    ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
+    btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
+    $lastIndexString = btnClass.slice(-1).toString();
+    $updateInputs.css("display", "flex");
+    $addTodo.hide();
+    indexTracker = $lastIndexString;
+    $dataTask.attr("class", `task${indexTracker}`);
+    $completeTask.attr("class", `complete${indexTracker}`);
+  });
+
+  // ---------------------------------------------------------Submit Update Event Listener------------------------------------------------
   $submitUpdate.on("click", function (e) {
-    $taskEdit = $(".task_update").val();
-    $dateEdit = $(".complete_by_update").val();
     e.preventDefault();
 
-    fetch(`/lists/todo/${lastIndexString}`, {
+    $lastIndexString = indexTracker;
+
+    $taskEdit = $(".task_update").val();
+    $dateEdit = $(".complete_by_update").val();
+    fetch(`/lists/todo/${indexTracker}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -310,6 +327,11 @@ function updateTodoTask() {
         return response.json();
       })
       .then((data) => {
+        console.log("IN THE THEN BLOCK");
+        $(`.task${indexTracker}`).html($taskEdit);
+        $(`.complete${indexTracker}`).html($dateEdit);
+        $addTodo.show();
+        $updateInputs.hide();
         console.log(`PATCH request successful:`, data);
       })
       .catch((error) => {
@@ -324,6 +346,8 @@ async function deleteTodoTask() {
     let $tableRow = $(`._${taskTracker}`);
     let $trashBtn = $(".trash" + taskTracker);
     let getTaskData = await $.get("/lists/todo/");
+
+    // ---------------------------------------------------------Delete Table Row Event Listener------------------------------------
     $trashBtn.on("click", function () {
       let btnClass = $(this).attr("class"); ///////////////////////////GETS CLASS OF ELEMENT/////////////////////////////////////////////
       let lastIndexString = btnClass.slice(-1).toString();
