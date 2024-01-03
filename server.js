@@ -15,18 +15,18 @@ const { Pool } = pg;
 const expressPort = process.env.PORT;
 let userID;
 
-// const pool = new Pool({
-//   user: "xxjrtxx",
-//   host: "localhost",
-//   password: "Passw0rd4U",
-//   database: "themed_list_db",
-//   port: 5432,
-// });
-const connectionString = process.env.DATABASE_URL;
-
 const pool = new Pool({
-  connectionString,
+  user: "xxjrtxx",
+  host: "localhost",
+  password: "Passw0rd4U",
+  database: "themed_list_db",
+  port: 5432,
 });
+// const connectionString = process.env.DATABASE_URL;
+
+// const pool = new Pool({
+//   connectionString,
+// });
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

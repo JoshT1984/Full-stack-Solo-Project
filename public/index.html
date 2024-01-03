@@ -143,16 +143,18 @@
         </form>
       </section>
 
-      <table class="table has-sticky-header">
-        <thead>
+      <table class="table has-sticky-header is-striped" id="myTable">
+        <thead class="head">
           <tr>
-            <th class="header-1 has-text-centered sticky-header">Task</th>
+            <th class="header-1 sticky-header">
+              <span class="header-1-span">Task</span>
+            </th>
             <th class="header-2 has-text-centered sticky-header">
               Complete-By
             </th>
           </tr>
         </thead>
-        <tbody class="tbody-todo is-bordered"></tbody>
+        <tbody class="tbody-todo"></tbody>
       </table>
       <!-- -----------------------------------------------------------------------patch data---------------------------------------------------- -->
       <section class="update_data">
@@ -190,6 +192,26 @@
         </form>
       </section>
     </main>
+
+    <footer>
+      <div id="copyright">&copy; 2023</div>
+      <div class="icons">
+        <a href="https://www.facebook.com"
+          ><img src="/assets/images/icons/facebook.png" alt="" class="fb"
+        /></a>
+        <a href="https://www.twitter.com"
+          ><img src="/assets/images/icons/x.png" alt="" class="x"
+        /></a>
+
+        <a href="https://www.instagram.com"
+          ><img
+            src="/assets/images/icons/instagram.png"
+            alt=""
+            class="instagram"
+        /></a>
+      </div>
+      <div class="date_and_time"></div>
+    </footer>
     <!-- --------------------------------------------------------------------------------SCRIPTS------------------------------------------------------------------------------ -->
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"

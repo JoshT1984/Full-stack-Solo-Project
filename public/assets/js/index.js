@@ -7,18 +7,19 @@ let indexTracker;
 render();
 
 function render() {
+  setInitialTheme();
   clickToViewThemes();
   buttonClick();
   taskTable();
   listSelect();
-  // getDate();
+  getDate();
 }
 
 // ----------------------------------------------------------------------GET DATE FROM API-------------------------------------------------------------------
-// function getDate() {
-//   const date = new Date();
-//   let $date = $(".date_and_time").html(date.toDateString());
-// }
+function getDate() {
+  const date = new Date();
+  let $date = $(".date_and_time").html(date.toDateString());
+}
 
 function listSelect() {
   const $listSelect = $(".list_select").on("click", function () {
@@ -141,17 +142,16 @@ function taskTable() {
         let $trashEditDiv = $("<div/>").addClass("trashEditDiv");
         let $dataTask = $("<td/>")
           .text($inputOne)
-          .addClass("task" + taskTracker, "has-text-centered")
-          .css("max-width", "600px");
+          .addClass("task" + taskTracker)
+          .css({ "max-width": "600px", borderBottom: 0, borderTop: 0 });
+        $dataTask.addClass("data");
 
         let $dataComplete_By = $("<td/>")
           .text($inputTwo)
-          .addClass(
-            "complete" + taskTracker,
-            "has-text-centered",
-            "complete_by"
-          )
-          .css("max-width", "200px");
+          .addClass("complete" + taskTracker)
+          .css({ "max-width": "200px", borderBottom: 0, borderTop: 0 });
+        $dataComplete_By.addClass("has-text-centered");
+        $dataComplete_By.addClass("data");
 
         $trashEditDiv.prepend($imgSpan, $imgEdit, $dataTask);
 
@@ -160,6 +160,8 @@ function taskTable() {
         $tableData.css("display", "block");
         $addTodo.show();
         $userH1.remove();
+        setInitialTheme();
+        clickToViewThemes();
         deleteTodoTask();
         updateTodoTask();
       })
@@ -170,7 +172,6 @@ function taskTable() {
 }
 // -----------------------------------------------------Function for theme color change functionality-----------------------------------
 async function clickToViewThemes() {
-  setInitialTheme();
   const $themeform = $("#theme-form");
   const $themeBtn = $(".theme_change");
   const listData = await $.get("/lists/themes");
@@ -184,6 +185,7 @@ async function clickToViewThemes() {
   const $h2 = $("h2");
   const $trashcan = $("img");
   let themeArray;
+  let rowColor;
 
   const themeData = {
     light: { index: 0 },
@@ -203,7 +205,12 @@ async function clickToViewThemes() {
 
   // ---------------------------------------------------------Theme Change Event Listener------------------------------------
   $("#themes").on("click", function () {
-    const $tableDiv = $(".trashEditDiv");
+    let $th = $("th");
+    let $tbody = $("tbody");
+    const $footer = $("footer");
+    let $dateColor = $(".date_and_time");
+    let $copyright = $("#copyright");
+
     const $selectedOption = $("#themes option:selected").val();
     const selectedTheme = themeData[$selectedOption];
     $themeform.hide();
@@ -224,7 +231,6 @@ async function clickToViewThemes() {
       $html.css({
         "background-color": themeArray[5],
         color: themeArray[6],
-        borderTopColor: themeArray[2],
       });
 
       $button.css({
@@ -242,12 +248,34 @@ async function clickToViewThemes() {
       $h2.css("color", themeArray[6]);
       $trashcan.css("background-color", themeArray[2]);
       $tableBody.css("background-color", themeArray[4]);
+
+      $th.css({
+        "background-color": themeArray[2],
+        "border-bottom": `2px ${themeArray[2]} solid`,
+        "border-left": `2px ${themeArray[2]} solid}`,
+      });
+      $tbody.css({
+        "border-top": `2px ${themeArray[2]} solid`,
+        "border-right": `2px ${themeArray[2]} solid`,
+        "border-bottom": `2px ${themeArray[2]} solid`,
+        "border-left": `4px ${themeArray[2]} solid}`,
+      });
+
+      $footer.css({
+        "background-color": themeArray[2],
+        color: themeArray[6],
+      });
+
+      $dateColor.css("color", themeArray[6]);
+      $copyright.css("color", themeArray[6]);
+      rowColor = themeArray[2];
+      $("#myTable tr:nth-child(even)").css("background-color", themeArray[2]);
     }
   });
 }
+
 // ----------------------------------------------------------------Sets Light mode as initial theme------------------------------------------------------
 async function setInitialTheme() {
-  const $tableDiv = $(".trashEditDiv");
   const listData = await $.get("/lists/themes");
   const $themeform = $("#theme-form");
   const $themeBtn = $(".theme_change");
@@ -260,7 +288,13 @@ async function setInitialTheme() {
   const $h1 = $("h1");
   const $h2 = $("h2");
   const $trashcan = $("img");
+  const $th = $("th");
+  const $tbody = $("tbody");
+  const $footer = $("footer");
   let themeArray;
+  let $dateColor = $(".date_and_time");
+  let $copyright = $("#copyright");
+  let $evenRows = $("#myTable tr:nth-child(even)");
 
   const themeData = {
     light: { index: 0 },
@@ -302,11 +336,37 @@ async function setInitialTheme() {
       "background-color": themeArray[2],
       color: themeArray[6],
     });
+
+    $footer.css({
+      "background-color": themeArray[2],
+      color: themeArray[6],
+    });
+
+    $dateColor.css("color", themeArray[6]);
+    $copyright.css("color", themeArray[6]);
+
     $inputs.css({ "background-color": themeArray[3], color: themeArray[6] });
-    $thead.css("background-color", themeArray[2]);
+    $thead.css({ "background-color": themeArray[2] });
     $h1.css("color", themeArray[6]);
     $h2.css("color", themeArray[6]);
     $trashcan.css("background-color", themeArray[2]);
+
+    $th.css({
+      "border-bottom": `2px ${themeArray[2]} solid`,
+      //   "border-right": `2px ${themeArray[2]} solid`,
+      //   "border-bottom": `3px ${themeArray[2]} solid`,
+      "border-left": `2px ${themeArray[2]} solid}`,
+      //   opacity: 0.8,
+    });
+    $tbody.css({
+      "border-top": `2px ${themeArray[2]} solid`,
+      "border-right": `2px ${themeArray[2]} solid`,
+      "border-bottom": `2px ${themeArray[2]} solid`,
+      "border-left": `4px ${themeArray[2]} solid}`,
+      opacity: 0.8,
+    });
+
+    $evenRows.css("background-color", themeArray[2]);
   }
 }
 
