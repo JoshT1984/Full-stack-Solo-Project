@@ -240,8 +240,6 @@ button:hover {
   box-sizing: border-box;
 }
 
-
-
 th.sticky-header {
   position: sticky;
   top: 0;
@@ -408,12 +406,12 @@ footer div {
   height: 2rem;
   background-color: white;
   border: 2px solid black;
-  transition: ease-in 200ms;
+  transition: ease-in 80ms;
   margin-right: 1rem;
 }
 
 .icons img:hover {
-  background-color: rgb(129, 129, 129);
+  opacity: 0.5;
 }
 
 .date_and_time {
